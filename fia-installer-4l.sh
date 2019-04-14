@@ -61,14 +61,14 @@ set -e -o pipefail -u #
 #fiainstallmodules=(0)
 #All modules
 #fiainstallmodules=(0 1 2 3 4) 
-fiainstallmodules=(0)
+fiainstallmodules=(0 1 2 3 4)
 
 #Just for upgrades
 #If you want to get a new agent id set to 1. 
 resetagent=0
 
 #Fusioninventory agent version (Debian derivatives only)
-fiaver='2.4.3-1'
+fiaver='2.5-1'
 
 #Config file name   
 client='TICgal'     
@@ -175,11 +175,16 @@ if [[ -r /etc/os-release ]]; then
         
         #Update repositories
         apt-get update 
-
-        #Check if old agent config exist which will break no-interactive install
-        if [ -f /etc/fusioninventory/agent.cfg ]; then
-           mv /etc/fusioninventory/agent.cfg /etc/fusioninventory/agent.cfg.prefia-$fiaver
-        fi
+	
+	#Remove cfg only if an update is needed       
+	array=($(apt-cache policy fusioninventory-agent))
+	if [ ${array[2]} != ${array[4]} ]; then
+	
+        	#Check if old agent config exist which will break no-interactive install
+        	if [ -f /etc/fusioninventory/agent.cfg ]; then
+           	mv /etc/fusioninventory/agent.cfg /etc/fusioninventory/agent.cfg.prefia-$fiaver
+        	fi
+	fi
 
         #Check if old manual version install exists
         if [ -f /usr/local/etc/fusioninventory/agent.cfg ]; then
@@ -228,8 +233,11 @@ if [[ -r /etc/os-release ]]; then
             libnet-cups-perl libnet-ip-perl libdigest-sha-perl libsocket-getaddrinfo-perl \
             libtext-template-perl 
 
+		
             #Install package
-            for i in "${fiainstallmodules[@]}"
+
+            rm -f fusioninventory*.deb
+	    for i in "${fiainstallmodules[@]}"
             do
                 #Dependencies for fusioninventory-agent-task-network
                 if [[ $i = 1 ]]; then
@@ -244,7 +252,8 @@ if [[ -r /etc/os-release ]]; then
                 
                 #Download and install packages    
                 tempdeb="${fiamodule[$i]}${fiaver}_all.deb"
-                wget -q ${fiarepository}${tempdeb} 
+		  
+		wget -q ${fiarepository}${tempdeb} 
                 dpkg -i ${tempdeb}
                 #Clean up#
                 rm ${tempdeb}  
