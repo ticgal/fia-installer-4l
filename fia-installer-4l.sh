@@ -61,14 +61,14 @@ set -e -o pipefail -u #
 #fiainstallmodules=(0)
 #All modules
 #fiainstallmodules=(0 1 2 3 4) 
-fiainstallmodules=(0 1 2 3 4)
+fiainstallmodules=(0)
 
 #Just for upgrades
 #If you want to get a new agent id set to 1. 
 resetagent=0
 
 #Fusioninventory agent version (Debian derivatives only)
-fiaver='2.5-1'
+fiaver='2.5-2'
 
 #Config file name   
 client='TICgal'     
