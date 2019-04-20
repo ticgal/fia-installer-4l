@@ -31,7 +31,7 @@ A little step into achieving a universal GNU/Linux installer for GLPI with
      - no ssl check
      - logger
      - no-category
-   - Other settings:
+   - Fixed settings:
      - Local inventory by default in /tmp
      - Logfile /var/log/fusioninventory.log
      - Colored terminal
