@@ -68,7 +68,7 @@ fiainstallmodules=(0)
 resetagent=0
 
 #Fusioninventory agent version (Debian derivatives only)
-fiaver='2.5-2'
+fiaver='2.5-1'
 
 #Config file name   
 client='TICgal'     
@@ -126,8 +126,15 @@ fi
 #Check OS 
 if [[ -r /etc/os-release ]]; then
     . /etc/os-release
-    echo Detected OS: "$ID" "$VERSION_ID"
-        if [[ $ID =~ ^(centos|fedora|redhat|ol)$  ]]; then
+	if [[ -n $ID_LIKE ]]; then 
+        	echo Detected OS: "$ID" "$VERSION_ID" Family: "$ID_LIKE"
+		#It's ugly but it works
+		ID=$ID_LIKE
+	else
+    		echo Detected OS: "$ID" "$VERSION_ID"
+	fi
+        
+	if [[ $ID =~ ^(centos|fedora|redhat|ol)$  ]]; then
     
         ###########
         # CentOS  #
@@ -165,7 +172,7 @@ if [[ -r /etc/os-release ]]; then
         # /CentOS #
         ###########
      
-        elif [[ $ID =~ ^(debian|ubuntu|elementary)$  ]]; then
+        elif [[ $ID =~ ^(debian|ubuntu)$ ]]; then
      
         ##########
         # Debian #
@@ -177,14 +184,14 @@ if [[ -r /etc/os-release ]]; then
         apt-get update 
 	
 	#Remove cfg only if an update is needed       
-	array=($(apt-cache policy fusioninventory-agent))
-	if [ ${array[2]} != ${array[4]} ]; then
+	#array=($(apt-cache policy fusioninventory-agent))
+	#if [ ${array[2]} != ${array[4]} ]; then
 	
         	#Check if old agent config exist which will break no-interactive install
         	if [ -f /etc/fusioninventory/agent.cfg ]; then
            	mv /etc/fusioninventory/agent.cfg /etc/fusioninventory/agent.cfg.prefia-$fiaver
         	fi
-	fi
+	#fi
 
         #Check if old manual version install exists
         if [ -f /usr/local/etc/fusioninventory/agent.cfg ]; then
@@ -202,8 +209,7 @@ if [[ -r /etc/os-release ]]; then
             
         #Recent Debian derivatives
         if  { [ "$ID" = "debian" ] && [ "$VERSION_ID" -ge 8 ]; } || \
-            { [ "$ID" = "ubuntu" ] && [ "${VERSION_ID:0:2}" -ge 16 ]; } || \
-            { [ "$ID" = "elementary" ] && [ "${VERSION_ID:0:1}" -ge 5 ]; }; then
+            { [ "$ID" = "ubuntu" ] && [ "${VERSION_ID:0:2}" -ge 16 ]; }; then
         
             #Debianrepository
             fiarepository='http://debian.fusioninventory.org/downloads/'
@@ -276,7 +282,6 @@ else
         echo "Running ID=$ID, VERSION=$VERSION. Not currently supported."
         echo "Please open an issue at github: https://github.com/ticgal/fia-installer-4l"
         exit 2
-fi
 else
     echo "Not running a distribution with /etc/os-release available"
     exit 3
