@@ -282,6 +282,7 @@ else
         echo "Running ID=$ID, VERSION=$VERSION. Not currently supported."
         echo "Please open an issue at github: https://github.com/ticgal/fia-installer-4l"
         exit 2
+fi
 else
     echo "Not running a distribution with /etc/os-release available"
     exit 3
