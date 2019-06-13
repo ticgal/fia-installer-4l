@@ -68,7 +68,7 @@ fiainstallmodules=(0)
 resetagent=0
 
 #Fusioninventory agent version (Debian derivatives only)
-fiaver='2.5-1'
+fiaver='2.5-3'
 
 #Config file name   
 client='TICgal'     
@@ -126,10 +126,10 @@ fi
 #Check OS 
 if [[ -r /etc/os-release ]]; then
     . /etc/os-release
-	if [[ -n $ID_LIKE ]]; then 
-        	echo Detected OS: "$ID" "$VERSION_ID" Family: "$ID_LIKE"
+	if [[ -n $ID ]]; then 
+        	echo Detected OS: "$ID" "$VERSION_ID" Family: "$ID"
 		#It's ugly but it works
-		ID=$ID_LIKE
+		ID=$ID
 	else
     		echo Detected OS: "$ID" "$VERSION_ID"
 	fi
