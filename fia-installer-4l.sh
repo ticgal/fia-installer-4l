@@ -134,14 +134,19 @@ if [[ -r /etc/os-release ]]; then
     		echo Detected OS: "$ID" "$VERSION_ID"
 	fi
         
-	if [[ $ID =~ ^(centos|fedora|redhat|ol)$  ]]; then
+	if [[ $ID =~ ^(centos|fedora|ol)$  ]]; then
     
         ###########
         # CentOS  #
         ###########
         
         #Enable EPEL repository and copr
-        yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        if [[ $VERSION_ID = 7 ]]; then
+            yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        elif [[ $VERSION_ID = 6 ]]; then
+            yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+        fi
+        
         yum -y install yum-plugin-copr 
         
         for i in "${fiainstallmodules[@]}" 
@@ -166,6 +171,17 @@ if [[ -r /etc/os-release ]]; then
             #Not installed?
             #fusioninventory-agent-cron.x86_64 : Cron for FusionInventory agent
             #fusioninventory-agent-task-inventory.x86_64 : Inventory task for FusionInventory
+            
+            # Enable and start service
+        
+            if [[ $VERSION_ID = 7 ]]; then
+                 systemctl enable fusioninventory-agent
+                 systemctl start fusioninventory-agent
+               
+            elif [[ $VERSION_ID = 6 ]]; then
+                chkconfig fusioninventory-agent on
+                service fusioninventory-agent start
+            fi       
         done
         
         ###########
@@ -266,6 +282,8 @@ if [[ -r /etc/os-release ]]; then
             done
         fi
         
+       
+        
 #Debian 7  
 elif  [[ -r /etc/debian-version ]]; then
     debianversion=$(</etc/debian-version)
@@ -274,6 +292,11 @@ elif  [[ -r /etc/debian-version ]]; then
         apt-get update 
         apt-get -y install -t wheezy-backports fusioninventory-agent
     fi
+
+        
+        #Enabling and starting service
+            systemctl enable fusioninventory-agent
+            systemctl start fusioninventory-agent
 
         ###########
         # /Debian #
