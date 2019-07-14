@@ -68,7 +68,7 @@ fiainstallmodules=(0)
 resetagent=0
 
 #Fusioninventory agent version (Debian derivatives only)
-fiaver='2.5-3'
+fiaver='2.5.1-1'
 
 #Config file name   
 client='TICgal'     
@@ -228,7 +228,7 @@ if [[ -r /etc/os-release ]]; then
             { [ "$ID" = "ubuntu" ] && [ "${VERSION_ID:0:2}" -ge 16 ]; }; then
         
             #Debianrepository
-            fiarepository='http://debian.fusioninventory.org/downloads/'
+            fiarepository='https://github.com/fusioninventory/fusioninventory-agent/releases/download/'${fiaver%-*}'/'
             fiacfg='/etc/fusioninventory/conf.d/'
 
             #FIA modules
@@ -253,7 +253,7 @@ if [[ -r /etc/os-release ]]; then
             apt-get install -y dmidecode hwdata ucf hdparm perl libuniversal-require-perl libwww-perl \
             libparse-edid-perl libproc-daemon-perl libfile-which-perl libxml-treepp-perl libyaml-perl \
             libnet-cups-perl libnet-ip-perl libdigest-sha-perl libsocket-getaddrinfo-perl \
-            libtext-template-perl 
+            libtext-template-perl libxml-xpath-perl
 
 		
             #Install package
