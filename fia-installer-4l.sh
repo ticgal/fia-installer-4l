@@ -199,16 +199,6 @@ if [[ -r /etc/os-release ]]; then
         #Update repositories
         apt-get update 
 	
-	#Remove cfg only if an update is needed       
-	#array=($(apt-cache policy fusioninventory-agent))
-	#if [ ${array[2]} != ${array[4]} ]; then
-	
-        	#Check if old agent config exist which will break no-interactive install
-        	if [ -f /etc/fusioninventory/agent.cfg ]; then
-           	mv /etc/fusioninventory/agent.cfg /etc/fusioninventory/agent.cfg.prefia-$fiaver
-        	fi
-	#fi
-
         #Check if old manual version install exists
         if [ -f /usr/local/etc/fusioninventory/agent.cfg ]; then
             rm -rf /usr/local/bin/fusioninventory-* /usr/local/share/fusioninventory \
@@ -276,7 +266,7 @@ if [[ -r /etc/os-release ]]; then
                 tempdeb="${fiamodule[$i]}${fiaver}_all.deb"
 		  
 		wget -q ${fiarepository}${tempdeb} 
-                dpkg -i ${tempdeb}
+                dpkg -i --force-confnew ${tempdeb}
                 #Clean up#
                 rm ${tempdeb}  
             done
