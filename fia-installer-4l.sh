@@ -111,6 +111,9 @@ fianocategory='printer'
 #################################
 #################################
 
+#FIA config path
+fiacfg='/etc/fusioninventory/conf.d/'
+
 #Check if script is run as root.
         if [ "$(id -u)" != "0" ]; then
            echo "This script must be run as root" 1>&2
@@ -220,7 +223,6 @@ if [[ -r /etc/os-release ]]; then
         
             #Debianrepository
             fiarepository='https://github.com/fusioninventory/fusioninventory-agent/releases/download/'${fiaver%-*}'/'
-            fiacfg='/etc/fusioninventory/conf.d/'
 
             #FIA modules
             fiamodule[0]="fusioninventory-agent_" 
