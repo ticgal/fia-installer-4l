@@ -148,6 +148,7 @@ if [[ -r /etc/os-release ]]; then
         fi
         
         yum -y install yum-plugin-copr 
+	yum -y copr enable trasher/fusioninventory-agent
         
         for i in "${fiainstallmodules[@]}" 
         do
