@@ -143,16 +143,20 @@ if [[ -r /etc/os-release ]]; then
         # CentOS  #
         ###########
         
-        #Enable EPEL repository and copr
-        if [[ $VERSION_ID = 7 ]]; then
-            yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-        elif [[ $VERSION_ID = 6 ]]; then
-            yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+        #Enable EPEL repository if not enabled
+	if ! rpm -q --quiet epel-release; then
+                if [[ $VERSION_ID = 7 ]]; then
+                yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+                elif [[ $VERSION_ID = 6 ]]; then
+                yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+                fi
         fi
-        
+
+	#Enable copr
         yum -y install yum-plugin-copr 
 	yum -y copr enable trasher/fusioninventory-agent
         
+	#Install modules
         for i in "${fiainstallmodules[@]}" 
         do
             #Agent is installed always
