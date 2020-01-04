@@ -78,7 +78,7 @@ fiatag=''
 
 #Fusioninventory server
 #fiaglpiserver='https://glpiserver/plugins/fusioninventory/'                                                        
-fiaglpiserver='x'         
+fiaglpiserver=''         
 
 #Debug 
 #(0,1,2,3)
