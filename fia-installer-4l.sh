@@ -2,7 +2,7 @@
 # Fusioninventory agent installer for GNU/Linux
 # fia-installer-4l.sh
 #
-# Copyright (C) 2018-2019 by TICgal
+# Copyright (C) 2018-2020 by TICgal
 #
 # https://github.com/ticgal/fia-installer-4l
 #
@@ -29,11 +29,11 @@
 #
 # @package   Fusioninventory Agent Installer for GNU/Linux
 # @author    TICgal
-# @copyright Copyright (c) 2018-2019 TICgal
+# @copyright Copyright (c) 2018-2020 TICgal
 # @license   AGPL License 3.0 or (at your option) any later version
 #            http://www.gnu.org/licenses/agpl-3.0-standalone.html
 # @link      https://github.com/ticgal/fia-installer-4l
-#
+# @link      https://tic.gal/en/project/fusioninventory-agent-installer-for-gnu-linux/
 #/
 
 #Will install optional modules in modern distributions
