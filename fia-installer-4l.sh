@@ -68,7 +68,7 @@ fiainstallmodules=(0)
 resetagent=0
 
 #Fusioninventory agent version (Debian derivatives only)
-fiaver='2.5.1-1'
+fiaver='2.5.2-1'
 
 #Config file name   
 client='TICgal'     
@@ -78,7 +78,7 @@ fiatag=''
 
 #Fusioninventory server
 #fiaglpiserver='https://glpiserver/plugins/fusioninventory/'                                                        
-fiaglpiserver=''         
+fiaglpiserver='x'         
 
 #Debug 
 #(0,1,2,3)
@@ -130,11 +130,7 @@ fi
 if [[ -r /etc/os-release ]]; then
     . /etc/os-release
 	if [[ -n $ID ]]; then 
-        	echo Detected OS: "$ID" "$VERSION_ID" Family: "$ID_LIKE"
-		#It's ugly but it works
-		ID=$ID
-	else
-    		echo Detected OS: "$ID" "$VERSION_ID"
+        	echo Detected OS: "$ID" "$VERSION_ID"
 	fi
         
 	if [[ $ID =~ ^(centos|fedora|ol)$  ]]; then
