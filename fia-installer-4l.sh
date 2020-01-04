@@ -130,7 +130,7 @@ fi
 if [[ -r /etc/os-release ]]; then
     . /etc/os-release
 	if [[ -n $ID ]]; then 
-        	echo Detected OS: "$ID" "$VERSION_ID" Family: "$ID"
+        	echo Detected OS: "$ID" "$VERSION_ID" Family: "$ID_LIKE"
 		#It's ugly but it works
 		ID=$ID
 	else
@@ -145,53 +145,66 @@ if [[ -r /etc/os-release ]]; then
         
         #Enable EPEL repository if not enabled
 	if ! rpm -q --quiet epel-release; then
-                if [[ $VERSION_ID = 7 ]]; then
+		if [[ $VERSION_ID = 8 ]]; then
+		dnf install epel-release -y
+		dnf config-manager --set-enabled PowerTools	
+		
+		elif [[ $VERSION_ID = 7 ]]; then
                 yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-                elif [[ $VERSION_ID = 6 ]]; then
+                
+		elif [[ $VERSION_ID = 6 ]]; then
                 yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
                 fi
         fi
 
+	# CENTOS 6 - 7 common dependencies and installation
+
+	if [[ $VERSION_ID = 6 || $VERSION_ID = 7 ]]; then
 	#Enable copr
         yum -y install yum-plugin-copr 
 	yum -y copr enable trasher/fusioninventory-agent
         
 	#Install modules
         for i in "${fiainstallmodules[@]}" 
-        do
-            #Agent is installed always
-            yum install -y fusioninventory-agent
-            #Which modules
-            case $i in
-                1)
-                    yum install -y fusioninventory-agent-task-network*
-                    ;;
-                2)
-                    yum install -y fusioninventory-agent-task-deploy*
-                    ;;
-                3)
-                    yum install -y fusioninventory-agent-task-esx*
-                    ;;
-                4)
-                    yum install -y fusioninventory-agent-task-collect*
-                    ;;
-            esac
-            #Not installed?
-            #fusioninventory-agent-cron.x86_64 : Cron for FusionInventory agent
-            #fusioninventory-agent-task-inventory.x86_64 : Inventory task for FusionInventory
+        	do
+        	#Agent is installed always
+        	yum install -y fusioninventory-agent
+        	#Which modules
+		case $i in
+        	        1)
+ 	                   yum install -y fusioninventory-agent-task-network*
+                	    ;;
+        	        2)
+   	                 yum install -y fusioninventory-agent-task-deploy*
+                	    ;;
+        	        3)
+	                    yum install -y fusioninventory-agent-task-esx*
+                	    ;;
+        	        4)
+	                    yum install -y fusioninventory-agent-task-collect*
+                	    ;;
+            	esac
+	done	
+	fi
+        
+	#Centos 8
+	dnf install fusioninventory-agent -y	
+	
+		#Not installed?
+            	#fusioninventory-agent-cron.x86_64 : Cron for FusionInventory agent
+            	#fusioninventory-agent-task-inventory.x86_64 : Inventory task for FusionInventory
             
-            # Enable and start service
-        
-            if [[ $VERSION_ID = 7 ]]; then
-                 systemctl enable fusioninventory-agent
-                 systemctl start fusioninventory-agent
+            	# Enable and start service
+            	if [[ $VERSION_ID = 7 || $VERSION_ID = 8 ]]; then
+                	systemctl enable fusioninventory-agent
+                	systemctl start fusioninventory-agent
                
-            elif [[ $VERSION_ID = 6 ]]; then
-                chkconfig fusioninventory-agent on
-                service fusioninventory-agent start
-            fi       
-        done
-        
+            	elif [[ $VERSION_ID = 6 ]]; then
+                	chkconfig fusioninventory-agent on
+                	service fusioninventory-agent start
+            	fi       
+        	
+
         ###########
         # /CentOS #
         ###########
