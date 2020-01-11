@@ -261,9 +261,12 @@ if [[ -r /etc/os-release ]]; then
             libnet-cups-perl libnet-ip-perl libdigest-sha-perl libsocket-getaddrinfo-perl \
             libtext-template-perl libxml-xpath-perl
 
+	    #Debian 10 missing path issue workaround
+            if { [ "$ID" = "debian" ] && [ "$VERSION_ID" = 10 ]; }; then
+                    export PATH=/sbin:$PATH
+            fi
 		
             #Install package
-
             rm -f fusioninventory*.deb
 	    for i in "${fiainstallmodules[@]}"
             do
