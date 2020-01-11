@@ -1,4 +1,4 @@
-# Fusioninventory Agent for GNU/Linux
+# Fusioninventory Agent Installer for GNU/Linux
 <img src="https://raw.githubusercontent.com/ticgal/fia-installer-4l/master/fia-installer-4l-logo.png" alt="Fusioninventory agent Installer for GNU/Linux Logo" height="250px" width="250px" class="js-lazy-loaded">
 
 [![License](https://img.shields.io/badge/License-GNU%20AGPLv3-blue.svg?style=flat-square)](https://github.com/ticgal/taskdrop/blob/master/LICENSE)
