@@ -184,7 +184,9 @@ if [[ -r /etc/os-release ]]; then
 	fi
         
 	#Centos 8
-	dnf install fusioninventory-agent -y	
+	if [[ $VERSION_ID = 8 ]]; then
+		dnf install fusioninventory-agent -y	
+	fi
 	
 		#Not installed?
             	#fusioninventory-agent-cron.x86_64 : Cron for FusionInventory agent
