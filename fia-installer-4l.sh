@@ -185,7 +185,7 @@ if [[ -r /etc/os-release ]]; then
         
 	#Centos 8
 	if [[ $VERSION_ID = 8 ]]; then
-		dnf install fusioninventory-agent -y	
+		dnf --enablerepo=epel-testing install fusioninventory-agent fusioninventory-agent-task-inventory			
 	fi
 	
 		#Not installed?
