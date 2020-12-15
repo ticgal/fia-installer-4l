@@ -68,7 +68,7 @@ fiainstallmodules=(0)
 resetagent=0
 
 #Fusioninventory agent version (Debian derivatives only)
-fiaver='2.5.2-1'
+fiaver='2.6-1'
 
 #Config file name   
 client='TICgal'     
@@ -78,7 +78,7 @@ fiatag=''
 
 #Fusioninventory server
 #fiaglpiserver='https://glpiserver/plugins/fusioninventory/'                                                        
-fiaglpiserver=''         
+fiaglpiserver=''                                                        
 
 #Debug 
 #(0,1,2,3)
@@ -142,8 +142,8 @@ if [[ -r /etc/os-release ]]; then
         #Enable EPEL repository if not enabled
 	if ! rpm -q --quiet epel-release; then
 		if [[ $VERSION_ID = 8 ]]; then
-		dnf install epel-release -y
-		dnf config-manager --set-enabled PowerTools	
+		dnf -y install epel-release
+		dnf -y config-manager --set-enabled PowerTools	
 		
 		elif [[ $VERSION_ID = 7 ]]; then
                 yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -185,7 +185,7 @@ if [[ -r /etc/os-release ]]; then
         
 	#Centos 8
 	if [[ $VERSION_ID = 8 ]]; then
-		dnf --enablerepo=epel-testing install fusioninventory-agent fusioninventory-agent-task-inventory			
+		dnf -y --enablerepo=epel-testing install fusioninventory-agent fusioninventory-agent-task-inventory			
 	fi
 	
 		#Not installed?
