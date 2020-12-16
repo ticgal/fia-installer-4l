@@ -171,7 +171,7 @@ if [[ -r /etc/os-release ]]; then
  	                   yum install -y fusioninventory-agent-task-network*
                 	    ;;
         	        2)
-   	                 yum install -y fusioninventory-agent-task-deploy*
+   	                   yum install -y fusioninventory-agent-task-deploy*
                 	    ;;
         	        3)
 	                    yum install -y fusioninventory-agent-task-esx*
@@ -261,7 +261,7 @@ if [[ -r /etc/os-release ]]; then
             apt-get install -y dmidecode hwdata ucf hdparm perl libuniversal-require-perl libwww-perl \
             libparse-edid-perl libproc-daemon-perl libfile-which-perl libxml-treepp-perl libyaml-perl \
             libnet-cups-perl libnet-ip-perl libdigest-sha-perl libsocket-getaddrinfo-perl \
-            libtext-template-perl libxml-xpath-perl
+            libtext-template-perl libxml-xpath-perl libyaml-tiny-perl
 
 	    #Debian 10 missing path issue workaround
             if { [ "$ID" = "debian" ] && [ "$VERSION_ID" = 10 ]; }; then
