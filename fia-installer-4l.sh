@@ -185,7 +185,27 @@ if [[ -r /etc/os-release ]]; then
         
 	#Centos 8
 	if [[ $VERSION_ID = 8 ]]; then
-		dnf -y --enablerepo=epel-testing install fusioninventory-agent fusioninventory-agent-task-inventory			
+		dnf -y --enablerepo=epel-testing install fusioninventory-agent fusioninventory-agent-task-inventory	
+		
+		#Install modules
+        	for i in "${fiainstallmodules[@]}"
+                do
+                #Which modules
+                case $i in
+                        1)
+                           dnf install -y fusioninventory-agent-task-network*
+                            ;;
+                        2)
+                           dnf install -y fusioninventory-agent-task-deploy*
+                            ;;
+                        3)
+                           dnf install -y fusioninventory-agent-task-esx*
+                            ;;
+                        4)
+                           dnf install -y fusioninventory-agent-task-collect*
+                            ;;
+                esac
+        	done
 	fi
 	
 		#Not installed?
