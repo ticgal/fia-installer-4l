@@ -171,7 +171,7 @@ if [[ -r /etc/os-release ]]; then
  	                   yum install -y fusioninventory-agent-task-network*
                 	    ;;
         	        2)
-   	                 yum install -y fusioninventory-agent-task-deploy*
+   	                   yum install -y fusioninventory-agent-task-deploy*
                 	    ;;
         	        3)
 	                    yum install -y fusioninventory-agent-task-esx*
@@ -185,7 +185,28 @@ if [[ -r /etc/os-release ]]; then
         
 	#Centos 8
 	if [[ $VERSION_ID = 8 ]]; then
-		dnf -y --enablerepo=epel-testing install fusioninventory-agent fusioninventory-agent-task-inventory			
+		dnf -y --enablerepo=epel-testing install fusioninventory-agent fusioninventory-agent-task-inventory	
+		
+		#Install modules
+        	for i in "${fiainstallmodules[@]}"
+                do
+                #Which modules
+                case $i in
+                        1)
+                           dnf install -y fusioninventory-agent-task-network*
+                            ;;
+                        2)
+                           #dnf install -y fusioninventory-agent-task-deploy*
+                           echo "Deploy is not available due to missing Perl dependency."
+			    ;;
+                        3)
+                           dnf install -y fusioninventory-agent-task-esx*
+                            ;;
+                        4)
+                           dnf install -y fusioninventory-agent-task-collect*
+                            ;;
+                esac
+        	done
 	fi
 	
 		#Not installed?
@@ -261,7 +282,7 @@ if [[ -r /etc/os-release ]]; then
             apt-get install -y dmidecode hwdata ucf hdparm perl libuniversal-require-perl libwww-perl \
             libparse-edid-perl libproc-daemon-perl libfile-which-perl libxml-treepp-perl libyaml-perl \
             libnet-cups-perl libnet-ip-perl libdigest-sha-perl libsocket-getaddrinfo-perl \
-            libtext-template-perl libxml-xpath-perl
+            libtext-template-perl libxml-xpath-perl libyaml-tiny-perl
 
 	    #Debian 10 missing path issue workaround
             if { [ "$ID" = "debian" ] && [ "$VERSION_ID" = 10 ]; }; then
@@ -328,12 +349,12 @@ fi
     echo "#Added by fia-installer-4l.sh"
     echo "#TICgal https://tic.gal"
     echo "#$(date)" 
-    echo "server = " $fiaglpiserver
-    echo "tag = " $fiatag
-    echo "debug = " $fiadebug
-    echo "no-ssl-check = " $fianosslcheck
-    echo "no-category = " $fianocategory
-    echo "logger" = $fialogger
+    echo "server = " "$fiaglpiserver"
+    echo "tag = " "$fiatag"
+    echo "debug = " "$fiadebug"
+    echo "no-ssl-check = " "$fianosslcheck"
+    echo "no-category = " "$fianocategory"
+    echo "logger = " "$fialogger"
     echo "local = /tmp"
     echo "logfile = /var/log/fusioninventory.log"
     echo "color = 1"
