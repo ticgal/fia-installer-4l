@@ -196,8 +196,9 @@ if [[ -r /etc/os-release ]]; then
                            dnf install -y fusioninventory-agent-task-network*
                             ;;
                         2)
-                           dnf install -y fusioninventory-agent-task-deploy*
-                            ;;
+                           #dnf install -y fusioninventory-agent-task-deploy*
+                           echo "Deploy is not available due to missing Perl dependency."
+			    ;;
                         3)
                            dnf install -y fusioninventory-agent-task-esx*
                             ;;
