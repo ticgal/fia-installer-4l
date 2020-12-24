@@ -348,12 +348,12 @@ fi
     echo "#Added by fia-installer-4l.sh"
     echo "#TICgal https://tic.gal"
     echo "#$(date)" 
-    echo "server = " $fiaglpiserver
-    echo "tag = " $fiatag
-    echo "debug = " $fiadebug
-    echo "no-ssl-check = " $fianosslcheck
-    echo "no-category = " $fianocategory
-    echo "logger" = $fialogger
+    echo "server = " "$fiaglpiserver"
+    echo "tag = " "$fiatag"
+    echo "debug = " "$fiadebug"
+    echo "no-ssl-check = " "$fianosslcheck"
+    echo "no-category = " "$fianocategory"
+    echo "logger = " "$fialogger"
     echo "local = /tmp"
     echo "logfile = /var/log/fusioninventory.log"
     echo "color = 1"
