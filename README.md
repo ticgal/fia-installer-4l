@@ -19,8 +19,9 @@ A little step into achieving a universal GNU/Linux installer for GLPI with
 
 ### Setup
 1. Download the script
-
-`wget https://raw.githubusercontent.com/ticgal/fia-installer-4l/master/fia-installer-4l.sh`
+```
+wget https://raw.githubusercontent.com/ticgal/fia-installer-4l/master/fia-installer-4l.sh
+```
 2. Edit the file and configure. 
    - Minimum settings:
      - Server:`fiaglpiserver`
@@ -48,5 +49,3 @@ Please fell free to contribute. Open an issue to discuss it and a related PR wit
 
 - Support more distros
 - Other script enhancements 
-
-
